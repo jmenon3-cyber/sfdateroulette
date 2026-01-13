@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import Head from 'next/head'
 import ideas from '../data/ideas'
 
+import { Analytics } from "@vercel/analytics/next"
+
 const MOODS = Array.from(new Set(ideas.flatMap(i=>i.mood))).sort()
 const BUDGETS = ["$","$$","$$$"]
 
