@@ -192,7 +192,7 @@ export default function Home(){
               <button className={"big-btn "+(spinning? 'spinning':'')} onClick={pick} aria-label="Spin me!">
                 <span className="big-btn-label">Spin me!</span>
               </button>
-              <button className="chip" onClick={spinAgain}>Spin again</button>
+              {/* Spin again button removed per request */}
               <div className="muted small">Tip: try loosening filters if results are scarce.</div>
             </div>
           </div>
