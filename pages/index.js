@@ -43,6 +43,7 @@ export default function Home(){
   const [spinning,setSpinning] = useState(false)
   const [picked, setPicked] = useState(null)
   const [explain,setExplain] = useState(null)
+  const [resultAnimKey, setResultAnimKey] = useState(0)
 
   const filters = useMemo(()=>({
     moods:selectedMoods, times:selectedTimes, budgets:selectedBudgets, links:linkFilters, ada:adaOnly
@@ -92,6 +93,7 @@ export default function Home(){
     }
     const choice = randomFrom(pool)
     setPicked(choice)
+    setResultAnimKey(k=>k+1)
     if(relaxed.length===0) setExplain(null)
     else setExplain(relaxed)
   }
@@ -109,12 +111,13 @@ export default function Home(){
       // pick different one if possible
       const {pool} = findWithRelaxation()
       if(!pool || pool.length===0){ setSpinning(false); return }
-      if(pool.length===1){ setPicked(pool[0]); setSpinning(false); return }
+      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); return }
       let next = picked
       const attempts = 10
       let i=0
       while(next && next.id === picked.id && i<attempts){ next = randomFrom(pool); i++ }
       setPicked(next)
+      setResultAnimKey(k=>k+1)
       setSpinning(false)
     }, 1100)
   }
@@ -130,13 +133,13 @@ export default function Home(){
 
       <div className="header">
         <div className="brand">
-          <div className="logo">SF</div>
-          <div>
-            <h1>SF Date Roulette</h1>
-            <div className="subtitle">Stop overthinking. Start adventuring.</div>
+            <div className="logo">SF</div>
+            <div>
+              <h1>SF Date Roulette</h1>
+              <div className="subtitle">Stop overthinking. Start adventuring.</div>
+              <div className="small muted">Mobile-first · No accounts</div>
+            </div>
           </div>
-        </div>
-        <div className="small muted">Mobile-first · No accounts</div>
       </div>
 
       <div className="controls">
@@ -170,7 +173,7 @@ export default function Home(){
           </div>
 
           <div style={{marginTop:12}}>
-            <div style={{marginBottom:6,fontWeight:700}}>Require links</div>
+            <div style={{marginBottom:6,fontWeight:700}}>Must-have links</div>
             <div className="row">
               <label className={"chip "+(linkFilters.maps?'active':'')} onClick={()=>setLinkFilters(l=>({...l,maps:!l.maps}))}>Maps</label>
               <label className={"chip "+(linkFilters.yelp?'active':'')} onClick={()=>setLinkFilters(l=>({...l,yelp:!l.yelp}))}>Yelp</label>
@@ -198,7 +201,7 @@ export default function Home(){
         </div>
         <div className="pick">
           {picked && (
-            <div className="panel result">
+            <div key={resultAnimKey} className="panel result">
               <br></br>
               <h2 className="title">{picked.title}</h2>
               <div className="meta">{picked.neighborhood} · {picked.time} · {picked.budget}</div>
