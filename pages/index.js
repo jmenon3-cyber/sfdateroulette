@@ -11,8 +11,6 @@ function splitMoodValue(v){
 
 const DATA = ideas.map(i=> ({ ...i, mood: splitMoodValue(i.mood) }))
 
-import { Analytics } from "@vercel/analytics/next"
-
 const MOODS = Array.from(new Set(DATA.flatMap(i=>i.mood))).sort()
 
 function capitalize(s){ if(!s) return ''; return s[0].toUpperCase()+s.slice(1) }
