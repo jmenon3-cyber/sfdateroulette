@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import Head from 'next/head'
 import ideas from '../data/ideas'
+import { Analytics } from "@vercel/analytics/next"
 
 function splitMoodValue(v){
   if(!v) return []
@@ -10,8 +11,6 @@ function splitMoodValue(v){
 }
 
 const DATA = ideas.map(i=> ({ ...i, mood: splitMoodValue(i.mood) }))
-
-import { Analytics } from "@vercel/analytics/next"
 
 const MOODS = Array.from(new Set(DATA.flatMap(i=>i.mood))).sort()
 
