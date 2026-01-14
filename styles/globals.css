@@ -94,7 +94,12 @@ h1{font-size:20px;margin:0}
   background: rgba(192, 54, 44, 0.06); /* subtle SF red tint */
   border-radius: 12px;
 }
-.result{margin-top:16px;padding:16px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#fffaf8);box-shadow:var(--shadow);animation:resultIn 420ms cubic-bezier(.2,.9,.3,1) both;transform-origin:center top}
+.result{margin-top:16px;padding:16px;border-radius:12px;background:linear-gradient(180deg, var(--international-orange), #C84B3F);box-shadow:var(--shadow);animation:resultIn 420ms cubic-bezier(.2,.9,.3,1) both;transform-origin:center top;color:#fff}
+.result .title,.result .meta,.result .why,.result .links,.result .explain{color: #fff}
+.result .meta{opacity:0.95}
+.result .chip{color:#fff;border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.06)}
+.result .chip.active{background:rgba(255,255,255,0.12);color:#fff;border-color:#fff}
+.result .link{color:#fff;opacity:0.95;text-decoration:underline}
 .title{font-size:18px;margin:0 0 6px}
 .mood-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .meta{color:var(--muted);font-size:13px;margin-bottom:8px}
