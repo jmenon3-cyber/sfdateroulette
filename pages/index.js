@@ -200,6 +200,7 @@ export default function Home(){
         <div className="pick">
           {picked && (
             <div className="panel result">
+              <br></br>
               <h2 className="title">{picked.title}</h2>
               <div className="meta">{picked.neighborhood} · {picked.time} · {picked.budget}</div>
               <div className="mood-row" style={{marginTop:8, marginBottom:6}}>
@@ -220,7 +221,7 @@ export default function Home(){
           {explain && (
             <div className="panel" style={{marginTop:10}}>
               {Array.isArray(explain) ? (
-                <div className="explain">No exact matches — relaxed filters: {explain.join(', ')}.</div>
+                <div className="explain">No exact matches, relaxed filters: {explain.join(', ')}.</div>
               ) : (
                 <div className="explain">{explain}</div>
               )}

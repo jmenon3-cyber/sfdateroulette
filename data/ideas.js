@@ -29,7 +29,7 @@ const ideas = [
     budget: "$$",
     neighborhood: "Embarcadero",
     description:
-      "Share small bites from a few vendors instead of committing to one spot—sweet, savory, and something fizzy.",
+      "Share small bites from a few vendors instead of committing to one spot, sweet, savory, and something fizzy.",
     why: "Lots of tiny choices keeps it fun, low-pressure, and conversation never stalls.",
     links: {
       maps: [
@@ -119,7 +119,7 @@ const ideas = [
     neighborhood: "Twin Peaks",
     description:
       "Bring a warm drink, bundle up, and watch the city sparkle from above for 20–30 minutes.",
-    why: "Big romance energy for almost no money—just vibes, lights, and quiet time.",
+    why: "Big romance energy for almost no money, just vibes, lights, and quiet time.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Twin%20Peaks%20San%20Francisco%2C%20CA",
@@ -223,7 +223,7 @@ const ideas = [
     budget: "$",
     neighborhood: "Alamo Square",
     description:
-      "Do a mini scavenger list: 'best dog,' 'best outfit,' 'best skyline shot'—then coffee and recap.",
+      "Do a mini scavenger list: 'best dog,' 'best outfit,' 'best skyline shot', then coffee and recap.",
     why: "A tiny game turns a classic spot into a shared inside joke instantly.",
     links: {
       maps: [
@@ -269,7 +269,7 @@ const ideas = [
     neighborhood: "Embarcadero",
     description:
       "Do hands-on exhibits with a date-night crowd, then grab a drink and compare favorite demos.",
-    why: "Built-in conversation starters everywhere—zero awkward small talk required.",
+    why: "Built-in conversation starters everywhere, zero awkward small talk required.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Exploratorium%20San%20Francisco%2C%20CA",
@@ -293,7 +293,7 @@ const ideas = [
     neighborhood: "Golden Gate Park",
     description:
       "Do a museum night with music + exhibits, then take a quick moonlit walk in the park after.",
-    why: "It's science-meets-party energy—fun, unexpected, and very SF.",
+    why: "It's science-meets-party energy, fun, unexpected, and very SF.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=California%20Academy%20of%20Sciences%20San%20Francisco%2C%20CA",
@@ -314,7 +314,7 @@ const ideas = [
     neighborhood: "SoMa",
     description:
       "Pick a few floors (don't try to do everything), then split one fancy pastry as a sweet finale.",
-    why: "Art gives you things to react to together—low pressure, high connection.",
+    why: "Art gives you things to react to together, low pressure, high connection.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=SFMOMA%20San%20Francisco%2C%20CA",
@@ -359,7 +359,7 @@ const ideas = [
     neighborhood: "Chinatown",
     description:
       "Order a few shareable plates, then explore the side alleys, shops, and little surprises.",
-    why: "It's sensory in the best way—lots to see, smell, taste, and laugh about.",
+    why: "It's sensory in the best way, lots to see, smell, taste, and laugh about.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Chinatown%20San%20Francisco%2C%20CA",
@@ -402,7 +402,7 @@ const ideas = [
     neighborhood: "Mission",
     description:
       "Browse bookstores and gift shops, then sit down for one dessert you both agree on.",
-    why: "Browsing together is surprisingly intimate—dessert gives it a clean 'finale.'",
+    why: "Browsing together is surprisingly intimate, dessert gives it a clean 'finale.'",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Valencia%20Street%20San%20Francisco%2C%20CA",
@@ -424,7 +424,7 @@ const ideas = [
     neighborhood: "Dogpatch",
     description:
       "Pop into a couple small galleries or studios, then post up on a patio with a beer and fries.",
-    why: "It feels like discovering a quieter SF—low crowds, lots of hidden gems.",
+    why: "It feels like discovering a quieter SF, low crowds, lots of hidden gems.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Dogpatch%20San%20Francisco%2C%20CA",
@@ -446,7 +446,7 @@ const ideas = [
     neighborhood: "Potrero Hill",
     description:
       "Grab takeout, then eat it somewhere with a skyline view while the city lights come on.",
-    why: "Comfort food + a view is undefeated—and it's naturally cozy and low-key.",
+    why: "Comfort food + a view is undefeated, and it's naturally cozy and low-key.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Potrero%20Hill%20San%20Francisco%2C%20CA",
@@ -490,7 +490,7 @@ const ideas = [
     neighborhood: "Marina",
     description:
       "Bike the waterfront at an easy pace, stop for photos, then grab something warm to drink.",
-    why: "Active but not intense—scenery carries the date so it never feels forced.",
+    why: "Active but not intense, scenery carries the date so it never feels forced.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Crissy%20Field%20San%20Francisco%2C%20CA",
@@ -511,7 +511,7 @@ const ideas = [
     budget: "$",
     neighborhood: "Presidio",
     description:
-      "Make a list: 'coolest shadow,' 'best bridge angle,' 'weirdest texture'—then compare shots.",
+      "Make a list: 'coolest shadow,' 'best bridge angle,' 'weirdest texture', then compare shots.",
     why: "Turning sightseeing into a game creates instant chemistry and inside jokes.",
     links: {
       maps: [
@@ -531,7 +531,7 @@ const ideas = [
     neighborhood: "Aquatic Park",
     description:
       "Watch the swimmers and boats, then grab a warm Irish coffee nearby and people-watch.",
-    why: "It's quirky-local energy plus a classic SF drink—memorable without being complicated.",
+    why: "It's quirky-local energy plus a classic SF drink, memorable without being complicated.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Aquatic%20Park%20Cove%20San%20Francisco%2C%20CA",
@@ -574,7 +574,7 @@ const ideas = [
     neighborhood: "North Beach",
     description:
       "Catch a jazz set, then keep it casual with a slice and a slow walk around the neighborhood.",
-    why: "Music sets the mood; pizza keeps it grounded—romantic without being precious.",
+    why: "Music sets the mood; pizza keeps it grounded, romantic without being precious.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=North%20Beach%20San%20Francisco%2C%20CA",
@@ -597,7 +597,7 @@ const ideas = [
     neighborhood: "Civic Center",
     description:
       "Try for last-minute tickets, then grab late-night bites and recap your favorite moments.",
-    why: "A little spontaneity makes it feel like an adventure—and a show is instant date-night energy.",
+    why: "A little spontaneity makes it feel like an adventure, and a show is instant date-night energy.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Civic%20Center%20San%20Francisco%2C%20CA",
@@ -618,7 +618,7 @@ const ideas = [
     neighborhood: "Nob Hill",
     description:
       "Walk the labyrinth quietly, then step outside for classic Nob Hill scenery and a slow stroll.",
-    why: "Peaceful, reflective, and surprisingly romantic—great for meaningful conversation.",
+    why: "Peaceful, reflective, and surprisingly romantic, great for meaningful conversation.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Grace%20Cathedral%20San%20Francisco%2C%20CA",
@@ -701,7 +701,7 @@ const ideas = [
     budget: "$$",
     neighborhood: "Union Square",
     description:
-      "Hold hands, wobble a little, laugh a lot—then recover with hot chocolate and a slow walk.",
+      "Hold hands, wobble a little, laugh a lot, then recover with hot chocolate and a slow walk.",
     why: "It's cheesy in the best way, and falling (a little) is basically guaranteed bonding.",
     links: {
       maps: [
@@ -770,7 +770,7 @@ const ideas = [
     neighborhood: "Treasure Island",
     description:
       "Go for a skyline sunset from a new angle, then do a wine-focused stop to linger a little longer.",
-    why: "It's a 'special occasion' vibe without needing a huge plan—just views and a toast.",
+    why: "It's a 'special occasion' vibe without needing a huge plan, just views and a toast.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Treasure%20Island%20San%20Francisco%2C%20CA",
@@ -792,7 +792,7 @@ const ideas = [
     neighborhood: "Outer Richmond",
     description:
       "Walk the dramatic coastal ruins and trails, then grab coffee/tea and warm up together.",
-    why: "Big nature energy first, then a cozy decompression—perfect pacing for a date.",
+    why: "Big nature energy first, then a cozy decompression, perfect pacing for a date.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Sutro%20Baths%20San%20Francisco%2C%20CA",
@@ -837,7 +837,7 @@ const ideas = [
     neighborhood: "Golden Gate Park",
     description:
       "Do lush greenhouse vibes, then wander to the tea garden area for a slow, scenic walk.",
-    why: "It's basically a romantic movie set—gentle, pretty, and easy to talk in.",
+    why: "It's basically a romantic movie set, gentle, pretty, and easy to talk in.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Conservatory%20of%20Flowers%20San%20Francisco%2C%20CA",
@@ -879,7 +879,7 @@ const ideas = [
     neighborhood: "Noe Valley",
     description:
       "Pick a recipe, shop for ingredients, then cook as a team with a playlist and a drink.",
-    why: "It's intimate without being too intense—teamwork + homemade food = real connection.",
+    why: "It's intimate without being too intense, teamwork + homemade food = real connection.",
     links: {
       maps: [
         "https://www.google.com/maps/search/?api=1&query=Noe%20Valley%20San%20Francisco%2C%20CA",

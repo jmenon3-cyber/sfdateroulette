@@ -27,11 +27,11 @@ npm run dev
 3. Open http://localhost:3000
 
 Files added
-- [package.json](package.json) — project manifest and scripts
-- [pages/index.js](pages/index.js) — main UI and logic
-- [pages/_app.js](pages/_app.js) — global CSS import
-- [data/ideas.js](data/ideas.js) — static dataset (60 ideas)
-- [styles/globals.css](styles/globals.css) — minimal styles
+- [package.json](package.json), project manifest and scripts
+- [pages/index.js](pages/index.js), main UI and logic
+- [pages/_app.js](pages/_app.js), global CSS import
+- [data/ideas.js](data/ideas.js), static dataset (60 ideas)
+- [styles/globals.css](styles/globals.css), minimal styles
 
 Notes / assumptions
 - Optimized for clarity and speed; minimal dependencies (Next, React).
