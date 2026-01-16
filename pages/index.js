@@ -118,7 +118,7 @@ export default function Home(){
       // reveal result immediately after spin ends
       setShowResult(true)
       playResultSound()
-      if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'})
+      scrollResult()
     }, 1100)
   }
 
@@ -130,7 +130,7 @@ export default function Home(){
       // pick different one if possible
       const {pool} = findWithRelaxation()
       if(!pool || pool.length===0){ setSpinning(false); return }
-      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); stopSpinSound(); setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60); return }
+      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); stopSpinSound(); scrollResult(); return }
       let next = picked
       const attempts = 10
       let i=0
@@ -142,7 +142,7 @@ export default function Home(){
       // reveal result immediately after spin ends
       setShowResult(true)
       playResultSound()
-      if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'})
+      scrollResult()
     }, 1100)
   }
 
@@ -280,6 +280,14 @@ export default function Home(){
     }catch(e){ console.warn('result sound error', e) }
   }
 
+  function scrollResult(){
+    try{
+      requestAnimationFrame(()=>{
+        setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 20)
+      })
+    }catch(e){ /* ignore */ }
+  }
+
   // cleanup on unmount (no-op)
   // (WebAudio nodes are stopped via stopSpinSound when spin ends)
 
@@ -374,9 +382,9 @@ export default function Home(){
               <div>{picked.description}</div>
               <div className="why">Why it’s fun: {picked.why}</div>
               <div className="links">
-                {picked.links.maps && picked.links.maps.length>0 && <a className="link" href={picked.links.maps[0]} target="_blank" rel="noreferrer">Google Maps</a>}
-                {picked.links.yelp && picked.links.yelp.length>0 && <a className="link" href={picked.links.yelp[0]} target="_blank" rel="noreferrer">Yelp</a>}
-                {picked.links.websites && picked.links.websites.length>0 && <a className="link" href={picked.links.websites[0]} target="_blank" rel="noreferrer">Website</a>}
+                {picked.links.maps && picked.links.maps.length>0 && <a className="link" href={picked.links.maps[0]} target="_blank" rel="noreferrer" aria-label="Google Maps">📍 Google Maps</a>}
+                {picked.links.yelp && picked.links.yelp.length>0 && <a className="link" href={picked.links.yelp[0]} target="_blank" rel="noreferrer" aria-label="Yelp">🍽️ Yelp</a>}
+                {picked.links.websites && picked.links.websites.length>0 && <a className="link" href={picked.links.websites[0]} target="_blank" rel="noreferrer" aria-label="Website">🌐 Website</a>}
               </div>
             </div>
           )}
