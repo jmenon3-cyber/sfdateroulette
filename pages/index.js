@@ -42,8 +42,16 @@ export default function Home(){
   const [spinning,setSpinning] = useState(false)
   const [picked, setPicked] = useState(null)
   const [explain,setExplain] = useState(null)
+  const [showResult,setShowResult] = useState(true)
   const [resultAnimKey, setResultAnimKey] = useState(0)
   const resultRef = useRef(null)
+  const audioCtxRef = useRef(null)
+  const noiseSourceRef = useRef(null)
+  const noiseGainRef = useRef(null)
+  const noiseFilterRef = useRef(null)
+  const tickTimeoutRef = useRef(null)
+  const clickStopRef = useRef(null)
+  const resultSoundRef = useRef(null)
 
   const filters = useMemo(()=>({
     moods:selectedMoods, times:selectedTimes, budgets:selectedBudgets, links:linkFilters, ada:adaOnly
@@ -100,22 +108,29 @@ export default function Home(){
 
   function pick(){
     // Start spinner, pick after short delay
+    startSpinSound()
     setSpinning(true)
+    setShowResult(false)
     setTimeout(()=>{
       doPick();
       setSpinning(false)
-      setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60)
+      stopSpinSound()
+      // reveal result immediately after spin ends
+      setShowResult(true)
+      playResultSound()
+      if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'})
     }, 1100)
   }
 
   function spinAgain(){
     if(!picked){ pick(); return }
+    startSpinSound()
     setSpinning(true)
     setTimeout(()=>{
       // pick different one if possible
       const {pool} = findWithRelaxation()
       if(!pool || pool.length===0){ setSpinning(false); return }
-      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60); return }
+      if(pool.length===1){ setPicked(pool[0]); setResultAnimKey(k=>k+1); setSpinning(false); stopSpinSound(); setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60); return }
       let next = picked
       const attempts = 10
       let i=0
@@ -123,9 +138,150 @@ export default function Home(){
       setPicked(next)
       setResultAnimKey(k=>k+1)
       setSpinning(false)
-      setTimeout(()=>{ if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'}) }, 60)
+      stopSpinSound()
+      // reveal result immediately after spin ends
+      setShowResult(true)
+      playResultSound()
+      if(resultRef.current) resultRef.current.scrollIntoView({behavior:'smooth', block:'center'})
     }, 1100)
   }
+
+  // --- Spin sound using WebAudio (white-noise whoosh) ---
+  function ensureAudioCtx(){
+    if(!audioCtxRef.current){
+      const C = window.AudioContext || window.webkitAudioContext
+      audioCtxRef.current = new C()
+    }
+    return audioCtxRef.current
+  }
+
+  function startSpinSound(){
+    try{
+      const ctx = ensureAudioCtx()
+      if(tickTimeoutRef.current) clearTimeout(tickTimeoutRef.current)
+      clickStopRef.current = null
+
+      let interval = 120
+      let running = true
+
+      const tick = ()=>{
+        if(!running) return
+        try{
+          const now = ctx.currentTime
+
+          // short noise burst for the rim/spoke click
+          const noiseBuffer = ctx.createBuffer(1, 256, ctx.sampleRate)
+          const data = noiseBuffer.getChannelData(0)
+          for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1)
+          const noiseSrc = ctx.createBufferSource()
+          noiseSrc.buffer = noiseBuffer
+
+          const bp = ctx.createBiquadFilter()
+          bp.type = 'bandpass'
+          const center = 2200 + Math.random()*3000
+          bp.frequency.setValueAtTime(center, now)
+          bp.Q.setValueAtTime(1.8, now)
+
+          const ng = ctx.createGain()
+          ng.gain.setValueAtTime(0.0001, now)
+          ng.gain.linearRampToValueAtTime(0.9, now + 0.002)
+          ng.gain.exponentialRampToValueAtTime(0.0001, now + 0.09)
+
+          noiseSrc.connect(bp); bp.connect(ng); ng.connect(ctx.destination)
+          noiseSrc.start()
+          noiseSrc.stop(now + 0.12)
+
+          // a low-volume body osc for wooden/metal thunk
+          const osc = ctx.createOscillator()
+          osc.type = 'triangle'
+          osc.frequency.setValueAtTime(420 + Math.random()*420, now)
+          const og = ctx.createGain()
+          og.gain.setValueAtTime(0.0001, now)
+          og.gain.linearRampToValueAtTime(0.18, now + 0.003)
+          og.gain.exponentialRampToValueAtTime(0.0001, now + 0.08)
+          osc.connect(og); og.connect(ctx.destination)
+          osc.start()
+          osc.stop(now + 0.12)
+        }catch(e){ /* ignore per-tick errors */ }
+
+        // accelerate ticks but clamp at a reasonable rate
+        interval = Math.max(35, interval * 0.88)
+        tickTimeoutRef.current = setTimeout(tick, interval)
+      }
+
+      tickTimeoutRef.current = setTimeout(tick, interval)
+      clickStopRef.current = ()=>{ running=false; if(tickTimeoutRef.current) clearTimeout(tickTimeoutRef.current); tickTimeoutRef.current = null }
+    }catch(e){ console.warn('spin sound error', e) }
+  }
+
+  function stopSpinSound(){
+    try{
+      // if using click ticks
+      if(clickStopRef.current){ clickStopRef.current(); clickStopRef.current = null }
+      if(tickTimeoutRef.current){ clearTimeout(tickTimeoutRef.current); tickTimeoutRef.current = null }
+      // clean existing noise refs if any
+      const ctx = audioCtxRef.current
+      const gain = noiseGainRef.current
+      const src = noiseSourceRef.current
+      if(gain && ctx){
+        const now = ctx.currentTime
+        gain.gain.cancelScheduledValues(now)
+        gain.gain.setValueAtTime(gain.gain.value || 0.001, now)
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12)
+      }
+      if(src){ setTimeout(()=>{ try{ src.stop(); src.disconnect(); }catch(e){} }, 160) }
+      noiseSourceRef.current = null
+      noiseFilterRef.current = null
+      noiseGainRef.current = null
+    }catch(e){ console.warn('stop sound', e) }
+  }
+
+  function playResultSound(){
+    try{
+      const ctx = ensureAudioCtx()
+      const now = ctx.currentTime
+
+      // three-note arpeggio (major chord) for a happy chime
+      const freqs = [523.25, 659.25, 783.99]
+      freqs.forEach((f,i)=>{
+        const o = ctx.createOscillator()
+        o.type = 'sine'
+        o.frequency.setValueAtTime(f * (1 + (Math.random()-0.5)*0.01), now + i*0.07)
+
+        const g = ctx.createGain()
+        g.gain.setValueAtTime(0.0001, now + i*0.07)
+        g.gain.linearRampToValueAtTime(0.2, now + i*0.07 + 0.02)
+        g.gain.exponentialRampToValueAtTime(0.0001, now + i*0.07 + 0.6)
+
+        o.connect(g); g.connect(ctx.destination)
+        o.start(now + i*0.07)
+        o.stop(now + i*0.07 + 0.65)
+      })
+
+      // sparkle noise burst for excitement
+      const nb = ctx.createBuffer(1, 512, ctx.sampleRate)
+      const data = nb.getChannelData(0)
+      for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * Math.exp(-i/150)
+      const ns = ctx.createBufferSource()
+      ns.buffer = nb
+
+      const hp = ctx.createBiquadFilter()
+      hp.type = 'highpass'
+      hp.frequency.setValueAtTime(1500, now)
+
+      const ng = ctx.createGain()
+      ng.gain.setValueAtTime(0.0001, now)
+      ng.gain.linearRampToValueAtTime(0.9, now + 0.02)
+      ng.gain.exponentialRampToValueAtTime(0.0001, now + 0.35)
+
+      ns.connect(hp); hp.connect(ng); ng.connect(ctx.destination)
+      ns.start(now + 0.02)
+      ns.stop(now + 0.35)
+    }catch(e){ console.warn('result sound error', e) }
+  }
+
+  // cleanup on unmount (no-op)
+  // (WebAudio nodes are stopped via stopSpinSound when spin ends)
 
   const moodChips = MOODS
 
